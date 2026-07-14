@@ -28,6 +28,10 @@ class FluxoCombate(Combate):
                 # Se o personagem tiver mana, mostramos a opção de magia dinamicamente!
                 if hasattr(heroi, "mana"):
                     print(f"[2] 🔮 Lançar Magia (Mana: {heroi.mana.total})")
+                elif hasattr(heroi, "furia"):
+                    print(f"[2] 😡 Ativar a Furia (Furia: {heroi.furia.total})")
+                elif hasattr(heroi, "visao"):
+                    print(f"[2] 🏹 Flexcha de longo alcance (Visão: {heroi.visao.total})")
                 print("[3] 🎒 Olhar Ficha/Mochila")
                 print("[4] 🏃 Fugir")
 
@@ -37,8 +41,33 @@ class FluxoCombate(Combate):
                     resultado_heroi = Combate.atacar(heroi, monstro)
                     resultado_heroi.mostrar()
                     turno_ativo = False
-                elif escolha == "2" and hasattr(heroi, "mana"):
-                    print(f"\n {heroi.nome} começa a canalizar energia magica... (mecanica em desenvolvimento!)")
+                elif escolha == "2" and (hasattr(heroi, "mana") or hasattr(heroi,"furia") or hasattr(heroi, "visao")):
+                    if hasattr(heroi, "mana"):
+                        # Tenta lançar a magia
+                        dano_causado = heroi.lancar_seta_de_gelo(monstro)
+
+                        # Se o dano for maior que zero, significa que ele tinha mana e a magia foi executada!
+                        if dano_causado > 0:
+                            turno_ativo = False
+
+                    elif hasattr(heroi, "furia"):
+                        # Tenta lançar a magia
+                        dano_causado = heroi.modo_furia(monstro)
+
+                        # Se o dano for maior que zero, significa que ele tinha mana e a magia foi executada!
+                        if dano_causado > 0:
+                            turno_ativo = False
+
+                    elif hasattr(heroi, "visao"):
+                        dano_causado = heroi.flechas_de_longo_alcance(monstro)
+
+                        if dano_causado > 0:
+                            turno_ativo = False
+
+                    else:
+                        # Se retornou 0 (sem mana), não gasta o turno, permitindo ele escolher outra coisa
+                        input("\nPressione ENTER para voltar e escolher outra ação...")
+                        print("-" * 40)
                     sleep(1)
 
                 elif escolha == "3":

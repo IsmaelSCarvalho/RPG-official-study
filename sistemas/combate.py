@@ -26,7 +26,7 @@ class Combate:
         if atacante.arma is None:
             atributo_ataque = atacante.atributo_desarmado
             dano_base_texto = atacante.dano_desarmado
-            print(f" 👊 {atacante.nome} Atacar sem arma")
+            print(f"👊 {atacante.nome} Atacar sem arma")
         else:
             atributo_ataque = atacante.arma.atributo
             dano_base_texto = atacante.arma.dano
