@@ -84,8 +84,15 @@ class FluxoCombate(Combate):
 
             if monstro.atributos.hp.total <= 0:
                 print(f"🏆 {heroi.nome} VENCEU A BATALHA!")
-                break
+                print("\n🎒 O monstro deixou algo para trás...")
+                # Você pode instanciar um item e mandar o herói coletar:
+                # heroi.inventario.adicionar_item(item_do_monstro)
 
+                # Entrega a recompensa
+                ouro = getattr(monstro, "ouro_recompensa", 10) # Padrão 10 se não tiver
+                xp = getattr(monstro, "xp_recompensa", 10)
+                heroi.ganhar_recompensa(ouro,xp)
+                break
             sleep(1.5)
 
             # ==========================================
