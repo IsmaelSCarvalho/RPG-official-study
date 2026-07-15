@@ -70,6 +70,21 @@ class Personagem:
             self.armadura = armadura_escolhida
             print(f"🛡️ {self.nome} equipou {armadura_escolhida.nome}!")
 
+    def usar_pocao_cura(self):
+        """Consome uma poção de cura se houver no inventário."""
+        # Procuramos se há uma poção de cura no inventário
+        pocao = next((item for item in self.inventario.itens if item.nome == "poção de cura"), None)
+
+        if pocao:
+            cura = 25
+            self.atributos.hp.base += cura
+            # Garante que não passe do máximo se você tiver um limite definido,
+            # ou apenas aumenta os pontos de HP atualizados.
+            self.inventario.itens.remove(pocao)
+            print(f"🧪 {self.nome} bebeu uma poção de cura e recupero {cura} de HP")
+        else:
+            print("❌ Você não tem Poções de Cura na mochila!")
+
     def receber_dano(self, quantidade_dano: int) -> int:
         self.atributos.hp.base -= quantidade_dano
 

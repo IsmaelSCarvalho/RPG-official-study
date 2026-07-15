@@ -33,7 +33,8 @@ class FluxoCombate(Combate):
                 elif hasattr(heroi, "visao"):
                     print(f"[2] 🏹 Flexcha de longo alcance (Visão: {heroi.visao.total})")
                 print("[3] 🎒 Olhar Ficha/Mochila")
-                print("[4] 🏃 Fugir")
+                print("[4] 🧪 Beber Poção de Cura")
+                print("[5] 🏃 Fugir")
 
                 escolha = input("O que você deseja fazer? ->")
 
@@ -76,6 +77,12 @@ class FluxoCombate(Combate):
                     print("-" * 40)
 
                 elif escolha == "4":
+                    heroi.usar_pocao_cura()
+                    # Beber poção não gasta seu turno para facilitar a vida do jogador!
+                    input("\nPressione ENTER para voltar ao menu...")
+                    print("-" * 40)
+
+                elif escolha == "5":
                     print(f"\n🏃 {heroi.nome} dá meia volta e tenta escapar correndo desesperadamente!")
                     print("💨 Você conseguiu fugir do combate com segurança!")
                     return  # Sai completamente da função e encerra a arena
