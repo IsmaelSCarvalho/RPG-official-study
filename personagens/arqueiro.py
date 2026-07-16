@@ -27,7 +27,7 @@ class Arqueiro(Personagem):
         dano_fisico = 13 + modificador_velocidade
 
         print(f"\n🏹 {self.nome} levanta o seu arco em direção do monstro, suas [flechas de longo alcance] são lançadas para o auto e rasgao o ceu em alta velocidade!")
-        print(f"✨ Gastou {custo_visao} de Furia! Furia restante: {self.visao.base}")
+        print(f"✨ Gastou {custo_visao} de visão! visão restante: {self.visao.base}")
 
         dano_sofrido = alvo.receber_dano(dano_fisico)
 
@@ -42,5 +42,5 @@ class Arqueiro(Personagem):
         super().mostrar()
 
         # Adicionamos o print exclusivo da mana do Mago
-        print(f"Velocidade: {self.velocidade.total} ")
+        print(f"Visao: {self.visao.total} ")
         print("=" * 20)

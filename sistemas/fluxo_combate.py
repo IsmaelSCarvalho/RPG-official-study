@@ -31,7 +31,7 @@ class FluxoCombate(Combate):
                 elif hasattr(heroi, "furia"):
                     print(f"[2] 😡 Ativar a Furia (Furia: {heroi.furia.total})")
                 elif hasattr(heroi, "visao"):
-                    print(f"[2] 🏹 Flexcha de longo alcance (Visão: {heroi.visao.total})")
+                    print(f"[2] 🏹 Flecha de longo alcance (Visão: {heroi.visao.total})")
                 print("[3] 🎒 Olhar Ficha/Mochila")
                 print("[4] 🧪 Beber Poção de Cura")
                 print("[5] 🏃 Fugir")

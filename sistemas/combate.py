@@ -59,8 +59,8 @@ class Combate:
         ).total
 
         dano_furia = 0
-        if hasattr(atacante, "furia") and atacante.furia > 0:
-            dano_furia = atacante.furia
+        if hasattr(atacante, "furia") and atacante.furia.base > 0:
+            dano_furia = atacante.furia.base
             print(f"🔥 FURIA ATIVA! ({dano_furia} de dano)")
 
         dano_total = max(0, rolagem_dano.total + modificador_atributo + dano_furia)

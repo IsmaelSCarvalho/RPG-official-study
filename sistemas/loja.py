@@ -24,7 +24,7 @@ class Loja:
             print("[ 3 ] 🛡️ Ver Armaduras à venda")
             print("[ 4 ] 🚪 Sair da Loja")
 
-            escolha = input("\nO que você deseja comprar? -> ")
+            escolha = input("\n 👴🏿 O que você deseja comprar? -> ")
 
 
             if escolha == "1":
@@ -45,7 +45,7 @@ class Loja:
                 print("⚠️ Opção inválida!")
 
     @staticmethod
-    def _mostrar_catagoria(heroi, nome_categoria, itens_estoque):
+    def _mostrar_categoria(heroi, nome_categoria, itens_estoque):
         """Gerencia de forma 100% dinâmica a exibição, escolha e compra de qualquer item."""
         exibindo = True
         while exibindo:
@@ -69,7 +69,7 @@ class Loja:
 
                     if heroi.ouro >= item_escolhido.valor:
                         heroi.ouro -= item_escolhido.valor
-                        heroi.iventario.adicionar_item(item_escolhido)
+                        heroi.inventario.adicionar_item(item_escolhido)
                         print(f"\n✅ Compra realizada! {item_escolhido.nome} adicionada à sua mochila!")
                         sleep(1)
                     else:

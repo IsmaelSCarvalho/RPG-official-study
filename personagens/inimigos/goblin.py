@@ -5,7 +5,13 @@ from personagens.atributosficha import AtributosFicha
 class Goblin(Inimigo):
     def __init__(self, identificador: str = ""):
         # Criamos a ficha de atributos do Goblin
-        atributos_goblin = AtributosFicha(forca=2, defesa=3, hp_max=10,sabedoria=0, velocidade=1)
+        atributos_goblin = AtributosFicha(
+            forca=2,
+            defesa=3,
+            hp_max=10,
+            sabedoria=0,
+            velocidade=1
+        )
 
         # Montamos o nome dele (Ex: "Goblin A" ou apenas "Goblin")
         nome_completo = f"Goblin {identificador}".strip()

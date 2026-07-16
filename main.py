@@ -1,30 +1,50 @@
 from personagens.mago import Mago
-from personagens.personagem import Personagem
-from personagens.atributosficha import AtributosFicha
-from sistemas.fluxo_combate import FluxoCombate
-from sistemas.loja import Loja
+from sistemas.exploracao import Exploracao
 
-print("🎮 TESTE DE COMPOSIÇÃO DE ITENS REAIS 🎮\n")
 
-# 1. Instanciamos o Merlin (ele começa zerado de itens e ouro)
-heroi = Mago("Merlin")
+def menu_principal():
+    print("🎮 BEM-VINDO AO RPG DE EXPLORAÇÃO E COMBATE 🎮")
+    nome_jogador = input("Digite o nome do seu Herói: ")
 
-# 2. Criamos o Goblin com ouro suficiente para as compras
-atributos_goblin = AtributosFicha(forca=4, defesa=10, hp_max=20, sabedoria=1, velocidade=2)
-monstro = Personagem("Goblin Tesoureiro", "Goblin", atributos_goblin)
-monstro.ouro_recompensa = 100  # Ouro farto!
-monstro.xp_recompensa = 120
+    # Iniciamos o herói (no caso, um Mago)
+    heroi = Mago(nome_jogador)
+    heroi.ouro = 20  # Começa com um dinheirinho de bolso
 
-# 3. Luta para conseguir os recursos
-FluxoCombate.iniciar_arena(heroi, monstro)
+    rodando = True
+    while rodando:
+        print("\n" + "=" * 40)
+        print(
+            f" 🧙‍♂️ {heroi.nome.upper()} | Nível: {heroi.nivel} | HP: {heroi.atributos.hp.base} | Ouro: {heroi.ouro} PO")
+        print("=" * 40)
+        print("[ 1 ] 🚶 Continuar Viagem (Explorar)")
+        print("[ 2 ] 🎒 Ver Inventário / Ficha do Herói")
+        print("[ 3 ] 🚪 Sair do Jogo")
 
-# 4. Entramos na loja para gastar nosso ouro suado em itens REAIS!
-Loja.entrar(heroi)
+        escolha = input("\nO que deseja fazer? -> ")
 
-# 5. Merlin decide abrir a mochila e equipar o que comprou!
-# (Aqui vai rodar o seu método interativo de escolher e equipar)
-heroi.equipar_arma()
-heroi.equipar_armadura()
+        if escolha == "1":
+            # Dá um passo na jornada, ativando os eventos aleatórios
+            Exploracao.explorar_passo(heroi)
 
-# 6. Exibimos a ficha final atualizada
-heroi.mostrar()
+        elif escolha == "2":
+            # Mostra a ficha completa do personagem
+            print("\n--- FICHA DO HERÓI ---")
+            heroi.mostrar()
+
+            # Se você tiver métodos de equipar no inventário, pode chamá-los aqui
+            if hasattr(heroi, "equipar_arma") and len(heroi.inventario.itens) > 0:
+                opcao = input("\nDeseja equipar alguma arma ou armadura? (s/n) -> ").lower()
+                if opcao == "s":
+                    heroi.equipar_arma()
+                    heroi.equipar_armadura()
+            input("\nPressione ENTER para voltar ao menu principal...")
+
+        elif escolha == "3":
+            print("\n💾 Salvando progresso na memória... Obrigado por jogar!")
+            rodando = False
+        else:
+            print("⚠️ Opção inválida!")
+
+
+if __name__ == "__main__":
+    menu_principal()
