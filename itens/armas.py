@@ -28,7 +28,7 @@ class Cajado(Arma):
             peso=2,
             valor=45,
             dano="1d6",
-            atributo="esperteza"
+            atributo="sabedoria"
         )
 
 class Adaga(Arma):

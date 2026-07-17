@@ -3,12 +3,71 @@ from time import sleep
 
 from sistemas.fluxo_combate import FluxoCombate
 from sistemas.loja import Loja
+from sistemas.mapa import MAPA_MUNDO
 
 from personagens.inimigos.goblin import Goblin
 from personagens.inimigos.esqueleto import Esqueleto
 from personagens.inimigos.dragao import Dragao
 
 class Exploracao:
+    @staticmethod
+    def escolher_destino():
+        """Apresenta o mapa para o jogador escolher para onde quer viajar."""
+        while True:
+            print("\n🗺️  --- MAPA DO REINO ---")
+            for k, regiao in MAPA_MUNDO.items():
+                print(f"[ {k} ] {regiao.nome} (Nível Recomendado: {regiao.nivel_recomendado})")
+                print("[ 4 ] ⬅️ Voltar para a Cidade")
+
+                escolha = input("\nPara onde deseja viajar, aventureiro? -> ")
+                if escolha in MAPA_MUNDO:
+                    return MAPA_MUNDO[escolha]
+                elif escolha == "4":
+                    return None
+                else:
+                    print("⚠️ Região inválida!")
+
+    @staticmethod
+    def viajar_para_regiao(heroi, regiao):
+        """Executa a aventura dentro da região selecionada."""
+        if heroi.nivel < regiao.nivel_recomendado:
+            print(f"\n⚠️ AVISO: {regiao.nome} é muito perigosa para o seu nível! Deseja arriscar mesmo assim?")
+            if input("(s/n) -> ").lower() != 's':
+                return
+
+        print(f"\n🧳 Viajando para: {regiao.nome}...")
+        sleep(1.5)
+
+        chance = random.randint(1, 100)
+
+        if chance <= 60:  # 60% de chance de luta na área selvagem
+            # Sorteia um monstro que pertence APENAS a essa região!
+            classe_monstro = random.choice(regiao.monstros_possiveis)
+            identificador_aleatorio = random.choice(["A", "B", "C"])
+            monstro = classe_monstro(identificador=identificador_aleatorio)
+
+            print(f"\n⚠️ Inimigo avistado no território da {regiao.nome}! Um {monstro.nome} bloqueia seu avanço!")
+            sleep(1)
+
+            # Executa seu combate real
+            # Supondo que a arena retorne True se o herói vencer
+            resultado = FluxoCombate.iniciar_arena(heroi, monstro)
+
+            # Se o herói venceu a batalha, ele dropa o material da missão!
+            # (Aqui você pode checar como seu fluxo de combate lida com a vitória)
+            print(f"🍀 Você vasculhou o corpo do monstro e encontrou: [1x {regiao.item_especifico}]!")
+            if isinstance(heroi.inventario.itens, list):
+                heroi.inventario.itens.append(regiao.item_especifico)
+
+        elif chance <= 85:
+            print("\n🏪 Você encontrou a cabana de um mercador isolado nesta região.")
+            Loja.entrar(heroi)
+        else:
+            print(f"\n🌲 Você explorou os arredores de {regiao.nome}, mas tudo estava calmo hoje.")
+            input("\nPressione ENTER para continuar...")
+
+
+
     @staticmethod
     def gerar_monstros_por_nivel(heroi):
         """Retorna uma instância de monstro real adequada para o nível do herói."""
