@@ -55,9 +55,9 @@ class Exploracao:
 
             # Se o herói venceu a batalha, ele dropa o material da missão!
             # (Aqui você pode checar como seu fluxo de combate lida com a vitória)
-            print(f"🍀 Você vasculhou o corpo do monstro e encontrou: [1x {regiao.item_especifico}]!")
+            print(f"🍀 Você vasculhou o corpo do monstro e encontrou: [1x {regiao.itens_especificos}]!")
             if isinstance(heroi.inventario.itens, list):
-                heroi.inventario.itens.append(regiao.item_especifico)
+                heroi.inventario.itens.append(regiao.itens_especificos)
 
         elif chance <= 85:
             print("\n🏪 Você encontrou a cabana de um mercador isolado nesta região.")

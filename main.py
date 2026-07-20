@@ -15,17 +15,27 @@ def menu_principal():
 
     rodando = True
     while rodando:
+        # Puxa a experiência atual do herói (ajuste o nome da variável se no seu for .xp ou .exp)
+        xp_atual = heroi.experiencia if hasattr(heroi, "experiencia") else getattr(heroi, "xp", 0)
+
+        # Conta quantos itens totais existem dentro da lista da mochila
+        total_itens = len(heroi.inventario.itens)
+
         print("\n" + "🏰 " * 15)
-        print(f"       CIDADE CENTRAL | {heroi.nome.upper()} [Nível {heroi.nivel}]")
+        # 1ª Melhoria: Adicionado o indicador de XP ao lado do nível
+        print(f"       CIDADE CENTRAL | {heroi.nome.upper()} [Nível {heroi.nivel}] | XP[{xp_atual}]")
         print("🏰 " * 15)
-        print(f"🪙 Ouro: {heroi.ouro} PO | 🎒 Itens na Mochila: {heroi.inventario.itens}")
+        # 2ª Melhoria: Agora mostra apenas o total numérico de itens acumulados
+        print(f"🪙 Ouro: {heroi.ouro} PO | 🎒 Itens na Mochila: [{total_itens}]")
         print("-" * 40)
         print("[ 1 ] 🗺️  Viajar / Explorar Regiões")
         print("[ 2 ] 🧓 Falar com o Mestre das Missões (NPC)")
-        print("[ 3 ] 🎒 Ver Ficha do Herói")
+        print(
+            "[ 3 ] 🎒 Ver Ficha / Inventário Detalhado")  # Boa prática para o jogador ainda ver o NOME dos itens se quiser
         print("[ 4 ] 🚪 Sair do Jogo")
 
         escolha = input("\nPara onde deseja ir na cidade? -> ")
+        # ... resto do seu código de escolhas (1, 2, 3, 4) igual ...
 
         if escolha == "1":
             regiao_alvo = Exploracao.escolher_destino()
