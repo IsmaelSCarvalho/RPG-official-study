@@ -1,41 +1,52 @@
+from time import sleep
+
+# Importações dos seus sistemas
 from personagens.mago import Mago
 from sistemas.exploracao import Exploracao
 from sistemas.missoes import guilda_global
+from sistemas.interface_visual import GerenciadorVisual  # ⬅️ IMPORTANTE!
 
 
 def menu_principal():
-    print("🎮 BEM-VINDO AO RPG EXPANDIDO 🎮")
-    nome_jogador = input("Digite o nome do seu Herói: ")
+    print("🎮 " * 15)
+    print("      BEM-VINDO AO RPG DE EXPLORAÇÃO E MISSÕES      ")
+    print("🎮 " * 15)
+
+    nome_jogador = input("\nDigite o nome do seu Herói: ").strip()
+    if not nome_jogador:
+        nome_jogador = "Aventureiro"
 
     heroi = Mago(nome_jogador)
     heroi.ouro = 50
-    # Caso seu inventário seja uma classe, garantimos que tenha a lista de itens acessível
+
     if not hasattr(heroi.inventario, "itens"):
         heroi.inventario.itens = []
 
+    # 🐉 🔥 TESTE DA CENA DO DRAGÃO LOGO NA ENTRADA! 🔥 🐉
+    print("\n⚡ [TESTE DE CENA VISUAL] Carregando encontro épico...")
+    GerenciadorVisual.exibir_cena(
+        "dragao",
+        f"Cuidado, {heroi.nome}! As nuvens do Pico do Dragão se abrem e um fogo devastador ilumina os céus!"
+    )
+    input("\nPressione ENTER para fechar a imagem e entrar na Cidade Central...")
+
+    # LOOP NORMAL DA CIDADE CENTRAL
     rodando = True
     while rodando:
-        # Puxa a experiência atual do herói (ajuste o nome da variável se no seu for .xp ou .exp)
-        xp_atual = heroi.experiencia if hasattr(heroi, "experiencia") else getattr(heroi, "xp", 0)
-
-        # Conta quantos itens totais existem dentro da lista da mochila
+        xp_atual = getattr(heroi, "experiencia", getattr(heroi, "xp", 0))
         total_itens = len(heroi.inventario.itens)
 
         print("\n" + "🏰 " * 15)
-        # 1ª Melhoria: Adicionado o indicador de XP ao lado do nível
         print(f"       CIDADE CENTRAL | {heroi.nome.upper()} [Nível {heroi.nivel}] | XP[{xp_atual}]")
         print("🏰 " * 15)
-        # 2ª Melhoria: Agora mostra apenas o total numérico de itens acumulados
         print(f"🪙 Ouro: {heroi.ouro} PO | 🎒 Itens na Mochila: [{total_itens}]")
         print("-" * 40)
         print("[ 1 ] 🗺️  Viajar / Explorar Regiões")
         print("[ 2 ] 🧓 Falar com o Mestre das Missões (NPC)")
-        print(
-            "[ 3 ] 🎒 Ver Ficha / Inventário Detalhado")  # Boa prática para o jogador ainda ver o NOME dos itens se quiser
+        print("[ 3 ] 🎒 Ver Ficha / Inventário Detalhado")
         print("[ 4 ] 🚪 Sair do Jogo")
 
-        escolha = input("\nPara onde deseja ir na cidade? -> ")
-        # ... resto do seu código de escolhas (1, 2, 3, 4) igual ...
+        escolha = input("\nPara onde deseja ir na cidade? -> ").strip()
 
         if escolha == "1":
             regiao_alvo = Exploracao.escolher_destino()
@@ -47,7 +58,7 @@ def menu_principal():
             heroi.mostrar()
             input("\nPressione ENTER para voltar...")
         elif escolha == "4":
-            print("\n👋 Até a próxima jornada, herói!")
+            print("\n👋 Até a próxima jornada!")
             rodando = False
 
 

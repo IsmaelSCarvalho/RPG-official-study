@@ -6,8 +6,8 @@ class Dragao(Inimigo):
 
         atributos_dragao = AtributosFicha(
             forca=30,
-            defesa=90,
-            hp_max=300,
+            defesa=30,
+            hp_max=100,
             sabedoria=13,
             velocidade=25
         )

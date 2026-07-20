@@ -105,7 +105,7 @@ class GuildaMissoes:
                     # Remove os itens do inventário do herói
                     for _ in range(m.quantidade_necessaria):
                         if isinstance(heroi.inventario.itens, list):
-                            heroi.iventarios.itens.remove(m.item_necessario)
+                            heroi.inventario.itens.remove(m.item_necessario)
 
                     # Entrega a recompensa
                     heroi.ouro += m.ouro_recompensa

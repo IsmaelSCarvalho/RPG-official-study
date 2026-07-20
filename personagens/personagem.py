@@ -71,20 +71,33 @@ class Personagem:
             print(f"🛡️ {self.nome} equipou {armadura_escolhida.nome}!")
 
     def usar_pocao_cura(self):
-        """Consome uma poção de cura se houver no inventário."""
-        # Procuramos se há uma poção de cura no inventário
-        pocao = next((item for item in self.inventario.itens if item.nome == "poção de cura"), None)
+        """Procura e consome uma poção de cura da mochila."""
+        # Funciona tanto se o item for String quanto se for um Objeto
+        pocao = None
+        for item in self.inventario.itens:
+            # Se o item for texto puro
+            if isinstance(item, str) and item.lower() == "poção de cura":
+                pocao = item
+                break
+            # Se o item for um Objeto com atributo .nome
+            elif hasattr(item, "nome") and item.nome.lower() == "poção de cura":
+                pocao = item
+                break
 
         if pocao:
-            cura = 25
-            self.atributos.hp.base += cura
-            # Garante que não passe do máximo se você tiver um limite definido,
-            # ou apenas aumenta os pontos de HP atualizados.
             self.inventario.itens.remove(pocao)
-            print(f"🧪 {self.nome} bebeu uma poção de cura e recupero {cura} de HP")
-        else:
-            print("❌ Você não tem Poções de Cura na mochila!")
+            cura = 30  # Quantidade de HP recuperado
 
+            # Recupera a vida do herói respeitando o limite máximo
+            hp_maximo = getattr(self.atributos.hp, "valor_total", getattr(self.atributos.hp, "base", 100))
+            self.hp_atual = min(hp_maximo, self.hp_atual + cura)
+
+            print(f"\n🧪 {self.nome} bebeu uma Poção de Cura e recuperou {cura} de HP!")
+            print(f"❤️  HP Atual: {self.hp_atual}/{hp_maximo}")
+        else:
+            print("\n❌ Você não tem nenhuma Poção de Cura na mochila!")
+
+        input("\nPressione ENTER para continuar...")
     def receber_dano(self, quantidade_dano: int) -> int:
         self.atributos.hp.base -= quantidade_dano
 

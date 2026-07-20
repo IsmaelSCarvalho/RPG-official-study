@@ -12,21 +12,26 @@ from personagens.inimigos.dragao import Dragao
 class Exploracao:
     @staticmethod
     def escolher_destino():
-        """Apresenta o mapa para o jogador escolher para onde quer viajar."""
+        """Apresenta o mapa e retorna a região selecionada."""
         while True:
             print("\n🗺️  --- MAPA DO REINO ---")
-            for k, regiao in MAPA_MUNDO.items():
-                print(f"[ {k} ] {regiao.nome} (Nível Recomendado: {regiao.nivel_recomendado})")
-                print("[ 4 ] ⬅️ Voltar para a Cidade")
 
-                escolha = input("\nPara onde deseja viajar, aventureiro? -> ")
-                if escolha in MAPA_MUNDO:
-                    return MAPA_MUNDO[escolha]
-                elif escolha == "4":
-                    return None
-                else:
-                    print("⚠️ Região inválida!")
+            # Percorre cada chave ("1", "2", "3") e imprime a região correspondente
+            for chave, regiao in MAPA_MUNDO.items():
+                print(f"[ {chave} ] {regiao.nome} (Nível Recomendado: {regiao.nivel_recomendado})")
 
+            # Opção de saída sempre calculada após os itens do mapa
+            opcao_sair = str(len(MAPA_MUNDO) + 1)
+            print(f"[ {opcao_sair} ] ⬅️ Voltar para a Cidade")
+
+            escolha = input("\nPara onde deseja viajar, aventureiro? -> ").strip()
+
+            if escolha in MAPA_MUNDO:
+                return MAPA_MUNDO[escolha]
+            elif escolha == opcao_sair or escolha == "4":
+                return None
+            else:
+                print("⚠️ Região inválida! Escolha uma opção do menu.")
     @staticmethod
     def viajar_para_regiao(heroi, regiao):
         """Executa a aventura dentro da região selecionada."""
